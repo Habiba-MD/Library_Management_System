@@ -1,6 +1,7 @@
 import tkinter.messagebox as messagebox
 import customtkinter as ctk
 import pandas as pd
+from datetime import datetime, timedelta
 
 def add_book():
     
@@ -115,8 +116,82 @@ def delete_book():
     
    
 def issue_book():
-    
-   return
+    input_window = ctk.CTkToplevel()
+    input_window.title("Issue Book")
+    input_window.geometry("400x300")
+
+    book_title_var = ctk.StringVar()
+    user_id_var = ctk.StringVar()
+
+    def submit_inputs():
+        try:
+            book_title = book_title_var.get().strip().title()
+            user_id = user_id_var.get().strip()
+
+            if not book_title or not user_id:
+                messagebox.showerror("Input Error", "All fields must be filled out!")
+                return
+
+            books_df = pd.read_csv("books.csv")
+            book_row = books_df[books_df["Title"].str.title() == book_title]
+
+            if book_row.empty:
+                messagebox.showerror("Not Found", f"Book '{book_title}' not found!")
+                return
+
+            if book_row["Available"].values[0].lower() == "no":
+                messagebox.showerror("Unavailable", f"Book '{book_title}' is already issued!")
+                return
+            
+            users_df = pd.read_csv("users.csv")
+            user_row = users_df[users_df["user_id"] == int(user_id)]
+
+            if user_row.empty:
+                messagebox.showerror("User Not Found", f"User with ID {user_id} not found!")
+                return
+
+            books_df.loc[books_df["Title"].str.title() == book_title, "Available"] = "no"
+            books_df.to_csv("books.csv", index=False)
+
+            issue_date = datetime.now().strftime("%Y-%m-%d")
+            return_date = (datetime.now() + timedelta(days=14)).strftime("%Y-%m-%d")  # 2-week loan period
+
+            try:
+                loans_df = pd.read_csv("loans.csv")
+            except FileNotFoundError:
+                loans_df = pd.DataFrame(columns=["loan_id", "book_title", "user_name", "user_id", "loan_date", "return_date", "status"])
+
+            next_loan_id = loans_df["loan_id"].max() + 1 if not loans_df.empty else 1
+
+            new_loan = pd.DataFrame([{
+                "loan_id": next_loan_id,
+                "book_title": book_title,
+                "user_name": user_row["username"].values[0],
+                "user_id": user_id,
+                "loan_date": issue_date,
+                "return_date": return_date,
+                "status": "Borrowed",
+            }])
+            
+            loans_df = pd.concat([loans_df, new_loan], ignore_index=True)
+            loans_df.to_csv("loans.csv", index=False)
+
+            messagebox.showinfo("Success", f"Book '{book_title}' issued successfully to {user_row['username'].values[0]} (ID: {user_id})!")
+            input_window.destroy()
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+    # GUI Elements
+    ctk.CTkLabel(input_window, text="Enter Book Title:", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Enter User ID:", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkEntry(input_window, textvariable=user_id_var).pack(pady=5)
+
+    ctk.CTkButton(input_window, text="Issue Book", command=submit_inputs).pack(pady=20)
+
+
     
 def return_book():
     return

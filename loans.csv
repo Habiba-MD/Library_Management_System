@@ -1,11 +1,5 @@
-loan_id,book_title,user_name,loan_date,return_date,status
-1,The Catcher in the Rye,John Doe,2024-11-01,2024-11-15,Returned
-2,To Kill a Mockingbird,Jane Smith,2024-11-05,2024-11-20,Returned
-3,1984,Tom Johnson,2024-11-07,2024-11-21,Overdue
-4,The Great Gatsby,Emily Davis,2024-11-10,2024-11-24,Returned
-5,Pride and Prejudice,Michael Brown,2024-11-12,2024-11-26,Returned
-6,The Hobbit,Anna Wilson,2024-11-15,2024-11-29,Overdue
-7,Six of Crows,Leigh Bardugo,2024-11-17,2024-12-01,Returned
-8,Moby-Dick,Laura Green,2024-11-20,2024-12-04,Overdue
-9,The Sword of Kaigen,M.L. Wang,2024-11-22,2024-12-06,Returned
-10,Sapiens: A Brief History of Humankind,Yuval Noah Harari,2024-11-25,2024-12-09,Returned
+loan_id,book_title,user_name,user_id,loan_date,return_date,status
+1,The Catcher in the Rye,habiba,3,2024-11-01,2024-11-15,Returned
+2,To Kill a Mockingbird,user2,2,2024-11-05,2024-11-20,Returned
+3,Madonna in a Fur Coat,rawan,4,2024-11-05,2024-11-20,Borrowed
+4,The Brothers Karamazov,habiba,3,2024-12-11,2024-12-25,Borrowed
