@@ -35,7 +35,7 @@ def create_employee_window(username):
     button1 = ctk.CTkButton(left_frame, text="Add Book",command=add_book,height=35,font=("Arial", 16, "bold"))
     button1.pack(pady=5, padx=10)
     
-    button1 = ctk.CTkButton(left_frame, text="Edit Book",height=35,font=("Arial", 16, "bold"))
+    button1 = ctk.CTkButton(left_frame, text="Edit Book",command=edit_book,height=35,font=("Arial", 16, "bold"))
     button1.pack(pady=5, padx=10)
 
     button2 = ctk.CTkButton(left_frame, text="Delete Book",command=delete_book, height=35,font=("Arial", 16, "bold"))

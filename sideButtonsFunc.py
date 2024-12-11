@@ -65,17 +65,57 @@ def add_book():
 
 
 def edit_book():
-    book_title = input("Enter the title of the book to edit: ")
-    books = read_books()
-    for book in books:
-        if book["title"] == book_title:
-            new_title = input("Enter the new title: ")
-            new_author = input("Enter the new author: ")
-            book["title"], book["author"] = new_title, new_author
-            write_books(books)
-            messagebox.showinfo("Edit Book", f"Book updated to '{new_title}' by {new_author}.")
-            return
-    messagebox.showwarning("Edit Book", "Book not found!")
+    input_window = ctk.CTkToplevel()
+    input_window.title("Edit Book")
+    input_window.geometry("400x300")  
+
+    book_title_var = ctk.StringVar()
+    new_book_title_var = ctk.StringVar()
+    new_genre_var = ctk.StringVar()
+    
+    def submit_edit():
+        try:
+            book_title = book_title_var.get().strip().title()
+            new_book_title = new_book_title_var.get().strip().title()
+            new_genre = new_genre_var.get().strip().title()
+
+            if not book_title or not new_book_title or not new_genre:
+                messagebox.showerror("Input Error", "All fields must be filled out!")
+                return
+            
+            books_df = pd.read_csv("books.csv")
+
+            book_row = books_df[books_df["Title"].astype(str) == book_title]
+            if book_row.empty:
+                messagebox.showerror("Not Found", f"Book '{book_title}' not found!")
+                return
+
+            books_df.loc[books_df["Title"].astype(str) == book_title, "Title"] = new_book_title
+            books_df.loc[books_df["Title"].astype(str) == new_book_title, "Genre"] = new_genre
+
+            next_book_id = books_df["book_id"].max() + 1 if not books_df.empty else 1
+            books_df.loc[books_df["Title"].astype(str) == new_book_title, "book_id"] = next_book_id
+
+            books_df.to_csv("books.csv", index=False)
+
+            messagebox.showinfo("Success", f"Book '{new_book_title}' details updated successfully!")
+            input_window.destroy()
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+    # GUI Elements
+    ctk.CTkLabel(input_window, text="Enter Book Title to Edit:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Enter New Book Auther:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=new_book_title_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Enter New Genre:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=new_genre_var).pack(pady=5)
+
+    ctk.CTkButton(input_window, text="Submit Changes", command=submit_edit).pack(pady=20)
+
     
 def delete_book():
     input_window = ctk.CTkToplevel()
