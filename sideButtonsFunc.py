@@ -81,11 +81,11 @@ def delete_book():
     input_window = ctk.CTkToplevel()
     input_window.title("Delete Book")
     input_window.geometry("400x200")  
-    book_title_var = ctk.StringVar()  # Corrected to use book_title_var
+    book_title_var = ctk.StringVar()  
 
     def submit_inputs():
         try:
-            book_title = book_title_var.get().strip().title()  # Corrected to use book_title_var
+            book_title = book_title_var.get().strip().title()  
             
             if not book_title:
                 messagebox.showerror("Input Error", "Book title must be provided!")
@@ -108,13 +108,14 @@ def delete_book():
 
     # GUI Elements
     ctk.CTkLabel(input_window, text="Enter Book Title to Delete:", font=("Arial", 14)).pack(pady=5)
-    ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)  # Corrected to use book_title_var
+    ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)  
 
     ctk.CTkButton(input_window, text="Delete", command=submit_inputs).pack(pady=20)
 
     
    
 def issue_book():
+    
    return
     
 def return_book():

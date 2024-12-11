@@ -1,7 +1,8 @@
 import customtkinter as ctk
-from tkinter import messagebox 
+from tkinter import messagebox , PhotoImage
 import tkinter.ttk as ttk
-from PIL import Image
+from PIL import Image, ImageTk
+import os
 import pandas as pd
 from statics import create_available_pie_chart, create_genre_pie_chart # Import figures
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -22,14 +23,14 @@ def create_employee_window(username):
     left_frame = ctk.CTkFrame(main_frame)
     left_frame.pack(side="left", fill="y", padx=20, pady=20)
     
-    user_icon = Image.open("user.png")  
-    ctk_image = ctk.CTkImage(light_image=user_icon, size=(200, 200))
+    # user_icon = Image.open("user.png")  
+    # ctk_image = ctk.CTkImage(light_image=user_icon, size=(200, 200))
     
-    image_label = ctk.CTkLabel(left_frame, image=ctk_image, fg_color="transparent", text="")
-    image_label.pack(pady=(20,20), padx=(10,10))
+    # image_label = ctk.CTkLabel(left_frame, image=ctk_image, fg_color="transparent", text="")
+    # image_label.pack(pady=(20,20), padx=(10,10))
     
-    username_label = ctk.CTkLabel(left_frame, text=username, font=("Arial", 16, "bold"))
-    username_label.pack(pady=(0, 20))
+    username_label = ctk.CTkLabel(left_frame, text= f"Welcome, {username}!", font=("Arial", 16, "bold"))
+    username_label.pack(pady=(10, 20))
 
     #Buttons
     button1 = ctk.CTkButton(left_frame, text="Add Book",command=add_book,height=35,font=("Arial", 16, "bold"))
