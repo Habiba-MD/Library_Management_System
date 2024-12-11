@@ -8,7 +8,7 @@ Book_ID,Title,Author,Genre,Year_Published,Pages,ISBN,Language,Rating,Available
 7,Pride and Prejudice,Jane Austen,Romance,1813,279,9781503290563,English,4.4,Yes
 8,The Hobbit,J.R.R. Tolkien,Fantasy,1937,310,9780547928227,English,4.5,Yes
 9,The Alchemist,Paulo Coelho,Adventure,1988,208,9780061122415,Portuguese,4.3,Yes
-10,The Brothers Karamazov,Fyodor Dostoevsky,Philosophy,1880,796,9780679763967,Russian,4.7,no
+10,The Brothers Karamazov,Fyodor Dostoevsky,Philosophy,1880,796,9780679763967,Russian,4.7,yes
 11,Six of Crows,Leigh Bardugo,Fantasy,2015,465,9781627792127,English,4.5,Yes
 12,Crooked Kingdom,Leigh Bardugo,Fantasy,2016,529,9781627792196,English,4.7,Yes
 13,The Burning God,R.F. Kuang,Fantasy,2020,640,9780062662634,English,4.6,Yes

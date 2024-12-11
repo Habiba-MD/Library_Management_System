@@ -2,7 +2,6 @@ import customtkinter as ctk
 from tkinter import messagebox , PhotoImage
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
-import os
 import pandas as pd
 from statics import create_available_pie_chart, create_genre_pie_chart # Import figures
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -47,9 +46,6 @@ def create_employee_window(username):
     
     button4 = ctk.CTkButton(left_frame, text="Return Book",command=return_book,height=35,font=("Arial", 16, "bold"))
     button4.pack(pady=5, padx=10)
-    
-    button5 = ctk.CTkButton(left_frame, text="Calculate Fine",height=35,command= calculate_fine,font=("Arial", 16, "bold"))
-    button5.pack(pady=5, padx=10)
     
     button6 = ctk.CTkButton(left_frame, text="Add User",command=add_user, height=35,font=("Arial", 16, "bold"))
     button6.pack(pady=5, padx=10)

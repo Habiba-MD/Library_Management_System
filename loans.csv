@@ -1,5 +1,5 @@
-loan_id,book_title,user_name,user_id,loan_date,return_date,status
-1,The Catcher in the Rye,habiba,3,2024-11-01,2024-11-15,Returned
-2,To Kill a Mockingbird,user2,2,2024-11-05,2024-11-20,Returned
-3,Madonna in a Fur Coat,rawan,4,2024-11-05,2024-11-20,Borrowed
-4,The Brothers Karamazov,habiba,3,2024-12-11,2024-12-25,Borrowed
+loan_id,book_title,user_name,user_id,loan_date,return_date,status,fine
+1,The Catcher in the Rye,habiba,3,2024-11-01,2024-11-15,Returned,0
+2,To Kill a Mockingbird,user2,2,2024-11-05,2024-11-20,Returned,0
+3,Madonna in a Fur Coat,rawan,4,2024-11-05,2024-11-20,Borrowed,0
+4,The Brothers Karamazov,habiba,3,2024-11-22,2024-12-11,Returned,25

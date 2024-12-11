@@ -4,7 +4,6 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 def add_book():
-    
     input_window = ctk.CTkToplevel()
     input_window.title("Add Book")
     input_window.geometry("400x600")  
@@ -192,16 +191,82 @@ def issue_book():
     ctk.CTkButton(input_window, text="Issue Book", command=submit_inputs).pack(pady=20)
 
 
-    
 def return_book():
-    return
-    
+    input_window = ctk.CTkToplevel()
+    input_window.title("Return Book")
+    input_window.geometry("400x300")
 
-def calculate_fine():
-    days_late = int(input("Enter the number of days the book is late: "))
-    fine_per_day = 5  
-    total_fine = days_late * fine_per_day
-    messagebox.showinfo("Calculate Fine", f"Total fine is ${total_fine}.")
+    loan_id_var = ctk.StringVar()
+    book_title_var = ctk.StringVar()
+
+    def submit_inputs():
+        try:
+            loan_id = loan_id_var.get().strip()
+            book_title = book_title_var.get().strip().title()
+
+            if not loan_id or not book_title:
+                messagebox.showerror("Input Error", "Loan ID and Book Title must be provided!")
+                return
+
+            loans_df = pd.read_csv("loans.csv")
+            loan_row = loans_df[loans_df["loan_id"] == int(loan_id)]
+
+            if loan_row.empty:
+                messagebox.showerror("Not Found", f"Loan ID '{loan_id}' not found!")
+                return
+
+            if loan_row["status"].values[0].lower() == "returned":
+                messagebox.showinfo("Already Returned", f"Loan ID '{loan_id}' has already been returned.")
+                return
+
+            if loan_row["book_title"].values[0].strip().title() != book_title:
+                messagebox.showerror("Mismatch", f"The book title '{book_title}' does not match the loan record.")
+                return
+
+            books_df = pd.read_csv("books.csv")
+            book_row = books_df[books_df["Title"].str.title() == book_title]
+            if book_row.empty:
+                messagebox.showerror("Book Not Found", f"Book '{book_title}' not found in inventory!")
+                return
+            
+            books_df.loc[books_df["Title"].str.title() == book_title, "Available"] = "yes"
+
+            # Calculate fine if the book is overdue
+            return_date = datetime.now().strftime("%Y-%m-%d")
+            loan_date = datetime.strptime(loan_row["loan_date"].values[0], "%Y-%m-%d")
+            return_date_obj = datetime.strptime(return_date, "%Y-%m-%d")
+            overdue_days = (return_date_obj - loan_date).days - 14  # Assume 14 days loan period
+
+            fine = 0
+            if overdue_days > 0:
+                fine = overdue_days * 5  # 5 pounds fine per day overdue 
+
+            loans_df.loc[loans_df["loan_id"] == int(loan_id), "status"] = "Returned"
+            loans_df.loc[loans_df["loan_id"] == int(loan_id), "return_date"] = return_date
+            loans_df.loc[loans_df["loan_id"] == int(loan_id), "fine"] = fine
+
+            books_df.to_csv("books.csv", index=False)
+            loans_df.to_csv("loans.csv", index=False)
+            
+            fine_message = f"Book '{book_title}' returned successfully!"
+            if fine > 0:
+                fine_message += f"\nFine: {fine}egp for {overdue_days} day(s) overdue."
+
+            messagebox.showinfo("Success", fine_message)
+            input_window.destroy()
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+    # GUI Elements
+    ctk.CTkLabel(input_window, text="Enter Loan ID:", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkEntry(input_window, textvariable=loan_id_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Enter Book Title:", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)
+
+    ctk.CTkButton(input_window, text="Return Book", command=submit_inputs).pack(pady=20)
+
     
 def add_user():
     input_window = ctk.CTkToplevel()
