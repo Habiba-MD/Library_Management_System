@@ -1,6 +1,9 @@
 user_id,username,email,password,role
-2.0,user2,user2@gmail,user2,user
-3.0,habiba,habiba@gmail,habiba,user
-4.0,rawan,rawan@gmail,rawan,user
-6.0,admin1,admin1@gmail,admin1,admin
-7.0,employee1,employee1@gmail,employee1,employee
+1,habiba,habiba@gmail,habiba,user
+2,rawan,rawan@gmail,rawan,user
+3,shalaby,shalaby@gmail,shalaby,user
+4,essam,essam@gmail,essam,user
+5,sarah,sarah@gmail,sarah,user
+6,laila,laila@gmail,laila,user
+7,employee1,employee1@gmail,employee1,employee
+8,admin1,admin1@gmail,admin1,admin

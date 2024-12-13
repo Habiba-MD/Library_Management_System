@@ -3,27 +3,28 @@ from tkinter import messagebox
 import pandas as pd
 import tkinter.ttk as ttk
 from sideButtonsFunc import *  
+from reports import *
 
 books_data = pd.read_csv('books.csv')
 users_data = pd.read_csv('users.csv')
 loans_data = pd.read_csv('loans.csv')
 
 
-def create_employee_window(username):
+def create_admin_window(username):
     ctk.set_appearance_mode('light')
     ctk.set_default_color_theme('blue')
-    employee_window = ctk.CTk()
-    employee_window.title("Employee Window")
-    employee_window.geometry("1000x700")
-
-    # Create main frame
-    main_frame = ctk.CTkFrame(employee_window)
+    admin_window = ctk.CTk()
+    admin_window.geometry('1000x700')
+    admin_window.title("Admin Window")
+    
+     # Create main frame
+    main_frame = ctk.CTkFrame(admin_window)
     main_frame.pack(fill="both", expand=True)
 
     # Left section 
     left_frame = ctk.CTkFrame(main_frame)
     left_frame.pack(side="left", fill="y", padx=20, pady=20)
-    
+
     username_label = ctk.CTkLabel(left_frame, text=f"Welcome, {username}!", font=("Arial", 16, "bold"))
     username_label.pack(pady=(10, 20))
 
@@ -51,10 +52,18 @@ def create_employee_window(username):
 
     button8 = ctk.CTkButton(left_frame, text="Add User", command=add_user, height=35, font=("Arial", 16, "bold"))
     button8.pack(pady=5, padx=10)
-    
+
     button9 = ctk.CTkButton(left_frame, text="Delete User", command=delete_user, height=35, font=("Arial", 16, "bold"))
     button9.pack(pady=5, padx=10)
     
+    button10= ctk.CTkButton(left_frame, text="Add Employee", command=add_employee, height=35, font=("Arial", 16, "bold"))
+    button10.pack(pady=5, padx=10)
+    
+    button11= ctk.CTkButton(left_frame, text="Delete Employee", command=delete_employee, height=35, font=("Arial", 16, "bold"))
+    button11.pack(pady=5, padx=10)
+    
+    button12= ctk.CTkButton(left_frame, text="Order Shipment", command=order_books, height=35, font=("Arial", 16, "bold"))
+    button12.pack(pady=5, padx=10)
     
 
     # Right section 
@@ -206,8 +215,7 @@ def create_employee_window(username):
     def update_users_table_view(search_query=""):
         # Apply search filter
         filtered_data = users_data
-        filtered_data = filtered_data[filtered_data['role'].str.lower() == 'user']
-
+        
         if search_query:
             filtered_data = filtered_data[filtered_data['username'].str.contains(search_query, case=False, na=False)]
         for row in user_tree.get_children():
@@ -321,8 +329,122 @@ def create_employee_window(username):
     for col in columns:
         loan_tree.heading(col, text=col)
 
-    update_loans_table_view()    
+    update_loans_table_view()
     
+    #all Transactions Tab
+    def update_transactions_table_view(month=None, year=None, search_query=""):
+        try:
+            transactions_df = pd.read_csv("transactions.csv")
+            transactions_df['Date'] = pd.to_datetime(transactions_df['Date'], errors='coerce')
+            
+            # Apply search filter for Book Title or User Name
+            filtered_data = transactions_df
+            if search_query:
+                filtered_data = filtered_data[filtered_data['Book_Title'].str.contains(search_query, case=False, na=False)]
+                filtered_data = filtered_data[filtered_data['user_name'].str.contains(search_query, case=False, na=False)]
+            
+            # Apply filter by month and year
+            if month is not None:
+                filtered_data = filtered_data[filtered_data['Date'].dt.month == month]
+            
+            if year is not None:
+                filtered_data = filtered_data[filtered_data['Date'].dt.year == year]
+
+            # Clear existing rows in the table
+            for row in transaction_tree.get_children():
+                transaction_tree.delete(row)
+            
+            # Add filtered data to the table
+            for _, row in filtered_data.iterrows():
+                transaction_tree.insert("", "end", values=(
+                    row['Transaction_ID'],
+                    row['Book_Title'],
+                    row['user_name'],
+                    row['Amount'],
+                    row['Transaction_Type'],
+                    row['Remarks'],
+                    row['Date'].strftime('%Y-%m-%d')  
+                ))
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Error loading transactions: {e}")
+
     
-    employee_window.mainloop()
-create_employee_window('habiba')
+    tabview.add("All Transactions")
+    transactions_frame = ctk.CTkFrame(tabview.tab("All Transactions"))
+    transactions_frame.pack(fill="both", expand=True, padx=20, pady=20)
+
+    transactions_label = ctk.CTkLabel(transactions_frame, text="Table View of All Transactions", font=("Arial", 14))
+    transactions_label.pack(pady=20)
+
+    search_filter_frame = ctk.CTkFrame(transactions_frame)
+    search_filter_frame.pack(pady=10)
+
+    search_label = ctk.CTkLabel(search_filter_frame, text="Search by Book Title or User Name:")
+    search_label.grid(row=0, column=0, padx=10)
+
+    search_entry = ctk.CTkEntry(search_filter_frame, placeholder_text="Enter search term")
+    search_entry.grid(row=0, column=1, padx=10)
+
+    month_label = ctk.CTkLabel(search_filter_frame, text="Select Month:")
+    month_label.grid(row=1, column=0, padx=10)
+
+    month_var = ctk.StringVar()
+    month_option = ctk.CTkOptionMenu(search_filter_frame, values=[str(i) for i in range(1, 13)], variable=month_var)
+    month_option.grid(row=1, column=1, padx=10)
+
+    year_label = ctk.CTkLabel(search_filter_frame, text="Select Year:")
+    year_label.grid(row=2, column=0, padx=10)
+
+    year_var = ctk.StringVar()
+    year_option = ctk.CTkOptionMenu(search_filter_frame, values=[str(i) for i in range(2020, 2031)], variable=year_var)
+    year_option.grid(row=2, column=1, padx=10)
+
+    filter_button = ctk.CTkButton(search_filter_frame, text="Search", command=lambda: update_transactions_table_view(
+        month=int(month_var.get()) if month_var.get() else None,
+        year=int(year_var.get()) if year_var.get() else None,
+        search_query=search_entry.get()
+    ))
+    filter_button.grid(row=3, column=0, columnspan=3, pady=10)
+
+    columns = ("Transaction_ID", "Book_Title", "User_Name", "Amount", "Transaction_Type",'Remarks', "Date")
+    transaction_tree = ttk.Treeview(transactions_frame, columns=columns, show="headings")
+    transaction_tree.pack(fill="both", expand=True, pady=20)
+
+    for col in columns:
+        transaction_tree.heading(col, text=col)
+
+    update_transactions_table_view()
+    
+    #reports tab
+    tabview.add("Reports")
+    reports_frame = ctk.CTkFrame(tabview.tab("Reports"))
+    reports_frame.pack(fill="both", expand=True, padx=40, pady=20)
+    
+    # Create the Canvas and Scrollbar for the reports
+    canvas = tk.Canvas(reports_frame)
+    scroll_y = tk.Scrollbar(reports_frame, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=scroll_y.set)
+
+    frame_for_plots = ctk.CTkFrame(canvas)
+    canvas.create_window((0, 0), window=frame_for_plots, anchor="nw")
+    canvas.pack(side="left", fill="both", expand=True)
+    scroll_y.pack(side="right", fill="y")
+    
+    # Function to display the reports in the frame
+    def display_reports():
+        display_plot_on_tab(frame_for_plots, loans_overview)
+        display_plot_on_tab(frame_for_plots, user_behavior)
+        display_plot_on_tab(frame_for_plots, book_popularity)
+        display_plot_on_tab(frame_for_plots, transaction_insights)
+        display_plot_on_tab(frame_for_plots, fines_and_overdue_books)
+    
+        frame_for_plots.update_idletasks()
+        canvas.config(scrollregion=canvas.bbox("all"))
+
+    display_reports()
+    
+    admin_window.mainloop()
+create_admin_window('habiba')
+
+    

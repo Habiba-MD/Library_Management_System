@@ -1,2 +1,33 @@
 Date,Amount,Transaction_Type,Book_ID,Remarks,Transaction_ID,Book_Title,user_id,user_name
-2024-12-13 20:42:25,64.0,Fine Payment,,Payment for outstanding fines,TRX1,,4,Rawan
+2024-01-10,180.0,Purchase,4,New book purchase,TX012,The Great Gatsby,1,habiba
+2024-02-15,310.0,Purchase,8,New book purchase,TX013,The Hobbit,2,rawan
+2024-03-20,465.0,Purchase,11,New book purchase,TX014,Six of Crows,3,shalaby
+2024-04-25,529.0,Purchase,12,New book purchase,TX015,Crooked Kingdom,4,essam
+2024-05-30,50.0,Fine,9,Late return fine,TX016,The Alchemist,3,shalaby
+2024-06-05,585.0,Purchase,5,New book purchase,TX017,Moby-Dick,1,habiba
+2024-07-15,50.0,Fine,6,Late return fine,TX018,One Hundred Years of Solitude,2,rawan
+2024-08-20,328.0,Purchase,2,New book purchase,TX019,1984,4,essam
+2024-09-10,208.0,Purchase,9,New book purchase,TX020,The Alchemist,1,habiba
+2024-10-12,417.0,Purchase,6,New book purchase,TX021,One Hundred Years of Solitude,3,shalaby
+2024-11-05,277.0,Purchase,1,New book purchase,TX001,The Catcher in the Rye,1,habiba
+2024-11-10,328.0,Purchase,2,New book purchase,TX002,1984,2,rawan
+2024-11-12,585.0,Purchase,5,New book purchase,TX003,Moby-Dick,3,shalaby
+2024-11-18,279.0,Purchase,7,New book purchase,TX004,Pride and Prejudice,4,essam
+2024-11-25,50.0,Fine,1,Overdue fine for late return,TX006,The Catcher in the Rye,1,habiba
+2024-12-01,328.0,Purchase,2,New book purchase,TX007,1984,1,habiba
+2024-12-03,417.0,Purchase,6,New book purchase,TX008,One Hundred Years of Solitude,2,rawan
+2024-12-05,208.0,Purchase,9,New book purchase,TX009,The Alchemist,3,shalaby
+2024-12-12,50.0,Fine,3,Overdue fine for late return,TX011,Moby-Dick,3,shalaby
+2024-12-13,399.0,Purchase,22,New book purchase,TX012,The Book Thief,4,essam
+2024-12-13,420.0,Purchase,23,New book purchase,TX013,The Night Circus,1,habiba
+2024-12-14,544.0,Purchase,15,New book purchase,TX014,The Poppy War,2,rawan
+2024-12-15,250.0,Purchase,28,New book purchase,TX015,The Subtle Art of Not Giving a F*ck,3,shalaby
+2024-12-16,380.0,Purchase,26,New book purchase,TX016,Where the Crawdads Sing,4,essam
+2024-12-17,380.0,Purchase,40,New book purchase,TX017,The Kite Runner,2,rawan
+2024-12-18,420.0,Purchase,32,New book purchase,TX018,The Help,1,habiba
+2024-12-19,499.0,Purchase,39,New book purchase,TX019,The Martian,3,shalaby
+2024-12-20,399.0,Purchase,41,New book purchase,TX020,The Shadow of the Wind,5,sarah
+2024-12-21,450.0,Purchase,42,New book purchase,TX021,The Silent Patient,6,laila
+2024-12-22,399.0,Purchase,43,New book purchase,TX022,The Four Winds,5,sarah
+2024-12-23,520.0,Purchase,44,New book purchase,TX023,The Invisible Man,6,laila
+2024-12-24,515.0,Purchase,45,New book purchase,TX024,Big Little Lies,5,sarah

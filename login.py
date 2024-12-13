@@ -5,12 +5,13 @@ import pandas as pd
 from PIL import Image
 from user import create_user_window  
 from employee import create_employee_window  
+from manager import create_admin_window
 
 # Theme, color, and app window
 ctk.set_appearance_mode('light')
 ctk.set_default_color_theme('blue')
 app = ctk.CTk()
-app.geometry('1000x700')
+app.geometry('500x500')
 app.title('Login')
 
 # Login function
@@ -37,11 +38,13 @@ def login():
             role = roles[row_index]
             if role == 'user':
                 create_user_window(username_input)
-                login_window.destroy()
+                app.destroy()
             elif role == 'employee':
                 create_employee_window(username_input)
-                login_window.destroy()
-            app.withdraw()
+                app.destroy()
+            elif role == 'admin':
+                create_admin_window(username_input)
+                app.destroy
         else:
             tkmb.showwarning(title='Invalid Credentials', message='Please check your email or password.')
     else:

@@ -736,24 +736,22 @@ def pay_fines():
 def add_user():
     input_window = ctk.CTkToplevel()
     input_window.title("Add User")
-    input_window.geometry("400x500")
+    input_window.geometry("400x400")
     input_window.attributes("-topmost", True)
 
     user_id_var = ctk.StringVar()
     username_var = ctk.StringVar()
     email_var = ctk.StringVar()
     password_var = ctk.StringVar()
-    role_var = ctk.StringVar()
-
+    
     def submit_inputs():
         try:
             user_id = user_id_var.get().strip()
             username = username_var.get().strip()
             email = email_var.get().strip().lower()
             password = password_var.get().strip()
-            role = role_var.get().strip().lower()
 
-            if not all([user_id, username, email, password, role]):
+            if not all([user_id, username, email, password]):
                 messagebox.showerror("Input Error", "All fields must be filled!")
                 return
 
@@ -770,7 +768,7 @@ def add_user():
                 "username": username,
                 "email": email,
                 "password": password,
-                "role": role
+                "role":"user"
             }
             users_df = pd.concat([users_df, pd.DataFrame([new_row])], ignore_index=True)
             users_df.to_csv("users.csv", index=False)
@@ -797,9 +795,6 @@ def add_user():
 
     ctk.CTkLabel(input_window, text="Password:", font=("Arial", 14)).pack(pady=5)
     ctk.CTkEntry(input_window, textvariable=password_var).pack(pady=5)
-
-    ctk.CTkLabel(input_window, text="Role:", font=("Arial", 14)).pack(pady=5)
-    ctk.CTkEntry(input_window, textvariable=role_var).pack(pady=5)
 
     ctk.CTkButton(input_window, text="Add User", command=submit_inputs).pack(pady=20)
 
@@ -854,3 +849,202 @@ def delete_user():
     ctk.CTkEntry(input_window, textvariable=username_var).pack(pady=5)
 
     ctk.CTkButton(input_window, text="Delete User", command=submit_inputs).pack(pady=20)
+
+
+def add_employee():    
+    input_window = ctk.CTkToplevel()
+    input_window.title("Add Employee")
+    input_window.geometry("400x400")
+    input_window.attributes("-topmost", True)
+
+    user_id_var = ctk.StringVar()
+    username_var = ctk.StringVar()
+    email_var = ctk.StringVar()
+    password_var = ctk.StringVar()
+
+    def submit_inputs():
+        try:
+            user_id = user_id_var.get().strip()
+            username = username_var.get().strip()
+            email = email_var.get().strip().lower()
+            password = password_var.get().strip()
+
+            if not all([user_id, username, email, password]):
+                messagebox.showerror("Input Error", "All fields must be filled!")
+                return
+
+            users_df = pd.read_csv("users.csv")
+            if user_id in users_df["user_id"].astype(str).values:
+                messagebox.showerror("Duplicate ID", f"User ID '{user_id}' already exists!")
+                return
+            if username in users_df["username"].astype(str).values:
+                messagebox.showerror("Duplicate Username", f"Username '{username}' already exists!")
+                return
+            
+            new_row = {
+                "user_id": user_id,
+                "username": username,
+                "email": email,
+                "password": password,
+                "role": "employee"
+            }
+            users_df = pd.concat([users_df, pd.DataFrame([new_row])], ignore_index=True)
+            users_df.to_csv("users.csv", index=False)
+
+            # Success message
+            messagebox.showinfo("Success", f"Employee '{username}' added successfully!")
+            input_window.destroy()
+        except FileNotFoundError:
+            messagebox.showerror("File Error", "The file 'users.csv' was not found!")
+        except pd.errors.EmptyDataError:
+            messagebox.showerror("File Error", "The file 'users.csv' is empty!")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+    # GUI Elements
+    ctk.CTkLabel(input_window, text="Employee ID:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=user_id_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Employee Name:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=username_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Email:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=email_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Password:", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=password_var).pack(pady=5)
+
+    ctk.CTkButton(input_window, text="Add Employee", command=submit_inputs).pack(pady=20)
+
+
+def delete_employee():
+    input_window = ctk.CTkToplevel()
+    input_window.title("Delete Employee")
+    input_window.geometry("400x250")
+    input_window.attributes("-topmost", True)
+    
+    user_id_var = ctk.StringVar()
+    username_var = ctk.StringVar()
+
+    def submit_inputs():
+        try:
+            user_id = user_id_var.get().strip()
+            username = username_var.get().strip()
+            if not user_id and not username:
+                messagebox.showerror("Input Error", "Either User ID or Username must be provided!")
+                return
+            
+            users_df = pd.read_csv("users.csv")
+            users_df["user_id"] = users_df["user_id"].astype(str).str.strip()
+            users_df["username"] = users_df["username"].astype(str).str.strip()
+
+      
+            if user_id and user_id in users_df["user_id"].values:
+                users_df = users_df[users_df["user_id"] != user_id]
+            elif username and username in users_df["username"].values:
+                users_df = users_df[users_df["username"] != username]
+            else:
+                messagebox.showerror("Not Found", f"No user with ID '{user_id}' or Username '{username}' found!")
+                return
+
+            users_df.to_csv("users.csv", index=False)
+            messagebox.showinfo("Success", f"Employee '{username}' deleted successfully!")
+            input_window.destroy()
+
+        except FileNotFoundError:
+            messagebox.showerror("File Error", "The file 'users.csv' was not found!")
+        except pd.errors.EmptyDataError:
+            messagebox.showerror("File Error", "The file 'users.csv' is empty!")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+    ctk.CTkLabel(input_window, text="Employee ID (optional):", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=user_id_var).pack(pady=5)
+
+    ctk.CTkLabel(input_window, text="Employee Name (optional):", font=("Arial", 14)).pack(pady=5)
+    ctk.CTkEntry(input_window, textvariable=username_var).pack(pady=5)
+
+    ctk.CTkButton(input_window, text="Delete Employee", command=submit_inputs).pack(pady=20)
+    
+def order_books():
+    # Create a new window for ordering books
+    order_window = ctk.CTkToplevel()
+    order_window.title("Order New Books")
+    order_window.geometry("500x400")
+    
+    # Define a list to store books to order
+    books_to_order = []
+
+    def add_book_to_order():
+        book_title = book_title_var.get().strip().title()
+        book_quantity = quantity_var.get()
+
+        if not book_title or book_quantity <= 0:
+            messagebox.showerror("Input Error", "Please enter a valid book title and quantity!")
+            return
+
+        # Add the book title and quantity to the list
+        books_to_order.append({"title": book_title, "quantity": book_quantity})
+
+        # Clear the input fields
+        book_title_var.set("")
+        quantity_var.set(1)
+
+        # Update the display of added books
+        order_textbox.insert("end", f"{book_title} - {book_quantity} copies\n")
+
+    def submit_order():
+        try:
+            # Check if there are any books in the order
+            if not books_to_order:
+                messagebox.showerror("Input Error", "No books to order!")
+                return
+
+            # Load the books inventory
+            books_df = pd.read_csv("books.csv")
+
+            for book in books_to_order:
+                book_title = book["title"]
+                quantity = book["quantity"]
+
+                # Check if the book exists in the inventory
+                book_row = books_df[books_df["Title"].str.title() == book_title]
+                
+                if book_row.empty:
+                    messagebox.showwarning("Book Not Found", f"Book '{book_title}' not found in inventory!")
+                    continue  # Skip this book
+
+                # Update the available copies of the existing book
+                available_copies = book_row["AvailableCopies"].values[0]
+                books_df.loc[books_df["Title"].str.title() == book_title, "AvailableCopies"] = available_copies + quantity
+
+            # Save the updated books inventory
+            books_df.to_csv("books.csv", index=False)
+
+            messagebox.showinfo("Order Success", "Books ordered successfully and inventory updated!")
+            order_window.destroy()
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+    # Create input fields for book title and quantity
+    book_title_var = ctk.StringVar()
+    quantity_var = ctk.IntVar(value=1)
+
+    ctk.CTkLabel(order_window, text="Enter Book Title:", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkEntry(order_window, textvariable=book_title_var).pack(pady=5)
+
+    ctk.CTkLabel(order_window, text="Enter Quantity:", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkEntry(order_window, textvariable=quantity_var).pack(pady=5)
+
+    # Button to add the book to the order list
+    add_button = ctk.CTkButton(order_window, text="Add Book to Order", command=add_book_to_order)
+    add_button.pack(pady=10)
+
+    # Replace the Listbox with a Textbox to display added books
+    order_textbox = ctk.CTkTextbox(order_window, height=10, width=50)
+    order_textbox.pack(fill="both", expand=True, pady=20)
+
+    # Button to submit the order
+    submit_button = ctk.CTkButton(order_window, text="Submit Order", command=submit_order)
+    submit_button.pack(pady=20)
