@@ -3,7 +3,6 @@ from tkinter import messagebox
 import pandas as pd
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from sideButtonsFunc import *  
 from statics import create_available_pie_chart, create_genre_pie_chart  
 
@@ -26,6 +25,13 @@ def create_employee_window(username):
     # Left section 
     left_frame = ctk.CTkFrame(main_frame)
     left_frame.pack(side="left", fill="y", padx=20, pady=20)
+    
+    # user_icon = Image.open("user.png")  
+    # ctk_image = ctk.CTkImage(light_image=user_icon, size=(200, 200))
+
+    # image_label = ctk.CTkLabel(left_frame, image=ctk_image, fg_color="transparent", text="")
+    # image_label.pack(pady=(20,20), padx=(10,10))
+
 
     username_label = ctk.CTkLabel(left_frame, text=f"Welcome, {username}!", font=("Arial", 16, "bold"))
     username_label.pack(pady=(10, 20))
@@ -40,17 +46,25 @@ def create_employee_window(username):
     button3 = ctk.CTkButton(left_frame, text="Delete Book", command=delete_book, height=35, font=("Arial", 16, "bold"))
     button3.pack(pady=5, padx=10)
 
-    button4 = ctk.CTkButton(left_frame, text="Issue Book", command=issue_book, height=35, font=("Arial", 16, "bold"))
+    button4 = ctk.CTkButton(left_frame, text="Loan Book", command=loan_book, height=35, font=("Arial", 16, "bold"))
     button4.pack(pady=5, padx=10)
 
     button5 = ctk.CTkButton(left_frame, text="Return Book", command=return_book, height=35, font=("Arial", 16, "bold"))
     button5.pack(pady=5, padx=10)
+    
+    button8 = ctk.CTkButton(left_frame, text="Purchase Book", command=purchase_book, height=35, font=("Arial", 16, "bold"))
+    button8.pack(pady=5, padx=10)
+    
+    button8 = ctk.CTkButton(left_frame, text="Pay Fines", command=pay_fines, height=35, font=("Arial", 16, "bold"))
+    button8.pack(pady=5, padx=10)
 
     button6 = ctk.CTkButton(left_frame, text="Add User", command=add_user, height=35, font=("Arial", 16, "bold"))
     button6.pack(pady=5, padx=10)
 
     button7 = ctk.CTkButton(left_frame, text="Delete User", command=delete_user, height=35, font=("Arial", 16, "bold"))
     button7.pack(pady=5, padx=10)
+    
+    
 
     # Right section 
     right_frame = ctk.CTkFrame(main_frame)
@@ -65,19 +79,7 @@ def create_employee_window(username):
     overview_frame = ctk.CTkFrame(tabview.tab("Overview"), bg_color='transparent')
     overview_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
-    # Create chart frame for available and genre pie charts
-    chart_frame = ctk.CTkFrame(overview_frame)
-    chart_frame.pack(side='right', fill="both", expand=True, padx=5, pady=10)
-
-    chart_frame_1 = ctk.CTkFrame(chart_frame)
-    chart_frame_1.pack(side="top", fill="both", expand=True)
-
-    chart_frame_2 = ctk.CTkFrame(chart_frame)
-    chart_frame_2.pack(side="bottom", fill="both", expand=True)
-
-    create_available_pie_chart(chart_frame_1)
-    create_genre_pie_chart(chart_frame_2)
-
+   
     # Search Section for books and users
     search_frame = ctk.CTkFrame(overview_frame, width=1000, height=300, bg_color='transparent')
     search_frame.pack(side="left", fill="both", expand=True, padx=5, pady=10)
@@ -151,7 +153,8 @@ def create_employee_window(username):
                 row['Genre'],
                 row['Available'],
                 row['Rating'],
-                row['Pages']
+                row['Price'],
+                row['AvailableCopies']
             ))
 
     tabview.add("All Books")
@@ -199,7 +202,7 @@ def create_employee_window(username):
     filter_button.grid(row=0, column=6, padx=10)
 
     # Table for displaying books
-    columns = ("Book_ID", "Title", "Author", "Genre", "Availability", "Rating", "Pages")
+    columns = ("Book_ID", "Title", "Author", "Genre", "Availability", "Rating", "Price","Available Copies")
     tree = ttk.Treeview(books_frame, columns=columns, show="headings")
     tree.pack(fill="both", expand=True, pady=20)
     
@@ -212,6 +215,8 @@ def create_employee_window(username):
     def update_users_table_view(search_query=""):
         # Apply search filter
         filtered_data = users_data
+        filtered_data = filtered_data[filtered_data['role'].str.lower() == 'user']
+
         if search_query:
             filtered_data = filtered_data[filtered_data['username'].str.contains(search_query, case=False, na=False)]
         for row in user_tree.get_children():
@@ -277,6 +282,7 @@ def create_employee_window(username):
                 row['user_name'],
                 row['loan_date'],
                 row['return_date'],
+                row['loan_duration'],
                 row['status'],
                 row['fine']
             ))
@@ -317,7 +323,7 @@ def create_employee_window(username):
     filter_button.grid(row=0, column=4, padx=10)
 
     # Table for displaying loans
-    columns = ("loan_id", "book_title", "user_name", "loan_date", "return_date", "status", "fine")
+    columns = ("loan_id", "book_title", "user_name", "loan_date", "return_date", 'loan_duration',"status", "fine")
     loan_tree = ttk.Treeview(loans_frame, columns=columns, show="headings")
     loan_tree.pack(fill="both", expand=True, pady=20)
 
