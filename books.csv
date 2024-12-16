@@ -1,5 +1,5 @@
 Book_ID,Title,Author,Genre,Year_Published,Price,ISBN,Language,Rating,Available,AvailableCopies,Pages
-1,The Catcher in the Rye,J.D. Salinger,Fiction,1951,277.0,9780316769488,English,4.1,Yes,4,
+1,The Catcher in the Rye,J.D. Salinger,Fiction,1951,277.0,9780316769488,English,4.1,Yes,3,
 2,1984,George Orwell,Dystopian,1949,328.0,9780451524935,English,4.2,Yes,5,
 3,To Kill a Mockingbird,Harper Lee,Fiction,1960,281.0,9780061120084,English,4.3,Yes,4,
 4,The Great Gatsby,F. Scott Fitzgerald,Classics,1925,180.0,9780743273565,English,3.9,Yes,1,
@@ -9,32 +9,21 @@ Book_ID,Title,Author,Genre,Year_Published,Price,ISBN,Language,Rating,Available,A
 8,The Hobbit,J.R.R. Tolkien,Fantasy,1937,310.0,9780547928227,English,4.5,Yes,2,
 9,The Alchemist,Paulo Coelho,Adventure,1988,208.0,9780061122415,Portuguese,4.3,Yes,5,
 10,The Brothers Karamazov,Fyodor Dostoevsky,Philosophy,1880,796.0,9780679763967,Russian,4.7,Yes,4,
-11,Six of Crows,Leigh Bardugo,Fantasy,2015,465.0,9781627792127,English,4.5,Yes,6,
+11,Six of Crows,Leigh Bardugo,Fantasy,2015,465.0,9781627792127,English,4.5,Yes,3,
 12,Crooked Kingdom,Leigh Bardugo,Fantasy,2016,529.0,9781627792196,English,4.7,Yes,2,
 13,The Burning God,R.F. Kuang,Fantasy,2020,640.0,9780062662634,English,4.6,Yes,1,
 14,Madonna in a Fur Coat,Sabahattin Ali,Drama,1943,180.0,9780143131851,Turkish,4.2,No,0,
-15,The Poppy War,R.F. Kuang,Fantasy,2018,544.0,9780062662566,English,4.3,Yes,3,
+15,The Poppy War,R.F. Kuang,Fantasy,2018,544.0,9780062662566,English,4.3,Yes,2,
 16,The Sword of Kaigen,M.L. Wang,Fantasy,2019,489.0,9780993933613,English,4.9,Yes,3,
 17,The Immortal Life of Henrietta Lacks,Rebecca Skloot,Non-Fiction,2010,381.0,9781400052189,English,4.6,Yes,2,
 18,Becoming,Michelle Obama,Non-Fiction,2018,448.0,9781524763138,English,4.8,Yes,4,
-19,Sapiens: A Brief History of Humankind,Yuval Noah Harari,Non-Fiction,2011,443.0,9780062316110,English,4.7,Yes,4,
-20,Educated,Tara Westover,Non-Fiction,2018,352.0,9780399590504,English,4.6,Yes,3,
+19,Sapiens A Brief History of Humankind,Yuval Noah Harari,Non-Fiction,2011,443.0,9780062316110,English,4.7,Yes,4,
+20,Educated,Tara Westover,Non-Fiction,2018,352.0,9780399590504,English,4.6,Yes,2,
 21,The Wright Brothers,David McCullough,Non-Fiction,2015,320.0,9781476728742,English,4.5,Yes,2,
-22,The Book Thief,Markus Zusak,Historical Fiction,2005,399.0,9780375842207,English,4.7,Yes,5,552
-23,The Night Circus,Erin Morgenstern,Fantasy,2011,420.0,9780307744432,English,4.3,Yes,4,387
-25,The Silent Patient,Alex Michaelides,Thriller,2019,349.0,9781250301697,English,4.3,Yes,6,325
-26,Where the Crawdads Sing,Delia Owens,Drama,2018,300.0,9780735219090,English,4.8,Yes,3,384
-27,The Shadow of the Wind,Carlos Ruiz Zafón,Historical Fiction,2001,455.0,9780143034902,Spanish,4.5,Yes,4,487
-28,The Subtle Art of Not Giving a F*ck,Mark Manson,Self-Help,2016,250.0,9780062457714,English,4.2,Yes,7,224
-29,Little Fires Everywhere,Celeste Ng,Drama,2017,380.0,9780735224292,English,4.4,Yes,5,368
-30,The Outsiders,S.E. Hinton,Young Adult,1967,289.0,9780142407332,English,4.5,Yes,4,192
-31,The Hunger Games,Suzanne Collins,Science Fiction,2008,450.0,9780439023528,English,4.7,Yes,6,374
-32,The Help,Kathryn Stockett,Historical Fiction,2009,420.0,9780399129085,English,4.6,Yes,5,451
-33,The Secret Garden,Frances Hodgson Burnett,Children's Literature,1911,199.0,9781593081433,English,4.6,Yes,8,331
-34,1984,George Orwell,Dystopian,1949,328.0,9780451524935,English,4.2,Yes,5,328
-35,The Road,Cormac McCarthy,Post-Apocalyptic,2006,499.0,9780307387899,English,4.1,Yes,3,287
-36,The Fault in Our Stars,John Green,Young Adult,2012,329.0,9780525478812,English,4.3,Yes,6,313
-37,The Picture of Dorian Gray,Oscar Wilde,Classic,1890,249.0,9780141439570,English,4.1,Yes,5,254
-38,Brave New World,Aldous Huxley,Dystopian,1932,399.0,9780060850524,English,4.3,Yes,4,311
-39,The Martian,Andy Weir,Science Fiction,2011,499.0,9780553418026,English,4.6,Yes,7,369
-40,The Kite Runner,Khaled Hosseini,Drama,2003,380.0,9781594631931,English,4.8,Yes,5,371
+22,The Book Thief,Markus Zusak,Historical Fiction,2005,399.0,9780375842207,English,4.7,Yes,5,552.0
+23,The Night Circus,Erin Morgenstern,Fantasy,2011,420.0,9780307744432,English,4.3,Yes,4,387.0
+25,The Silent Patient,Alex Michaelides,Thriller,2019,349.0,9781250301697,English,4.3,Yes,6,325.0
+26,Where the Crawdads Sing,Delia Owens,Drama,2018,300.0,9780735219090,English,4.8,Yes,3,384.0
+27,The Shadow of the Wind,Carlos Ruiz Zafón,Historical Fiction,2001,455.0,9780143034902,Spanish,4.5,Yes,4,487.0
+29,Little Fires Everywhere,Celeste Ng,Drama,2017,380.0,9780735224292,English,4.4,Yes,5,368.0
+30,The Outsiders,S.E. Hinton,Young Adult,1967,289.0,9780142407332,English,4.5,Yes,4,192.0

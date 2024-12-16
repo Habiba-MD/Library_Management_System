@@ -276,7 +276,7 @@ def loan_book():
             loans_df = pd.concat([loans_df, new_loan], ignore_index=True)
             loans_df.to_csv("loans.csv", index=False)
 
-            messagebox.showinfo("Success", f"Book '{book_title}' issued successfully to {user_name} (ID: {user_id}) for {loan_duration} days!")
+            messagebox.showinfo("Success", f"Book '{book_title}' loaned successfully to {user_name} (ID: {user_id}) for {loan_duration} days!")
             input_window.destroy()
 
         except Exception as e:
@@ -494,7 +494,7 @@ def purchase_book():
     def open_visa_window():
         visa_window = ctk.CTkToplevel()
         visa_window.title("Visa Payment")
-        visa_window.geometry("500x300")
+        visa_window.geometry("500x400")
         visa_window.attributes("-topmost", True)
 
         ctk.CTkLabel(visa_window, text="Visa Card Number:").pack(pady=10)
@@ -510,17 +510,22 @@ def purchase_book():
         cvv_entry.pack(pady=10)
 
         def submit_visa_payment():
-            if not visa_card_entry.get() or not expiry_date_entry.get() or not cvv_entry.get():
+            visa_card = visa_card_entry.get()
+            expiry_date = expiry_date_entry.get()
+            cvv = cvv_entry.get()
+
+            if not visa_card or not expiry_date or not cvv:
                 messagebox.showerror("Error", "Please fill in all Visa details.")
                 return
-            
+
             if not visa_card.isdigit() or len(visa_card) != 16:
                 messagebox.showerror("Error", "Visa card number must be exactly 16 digits.")
                 return
-            
+
             if not cvv.isdigit() or len(cvv) != 3:
                 messagebox.showerror("Error", "CVV must be exactly 3 digits.")
                 return
+
             visa_window.destroy()
             finalize_purchase(user_name_entry.get(), user_id_entry.get(), book_title_entry.get(), int(quantity_entry.get()))
 
@@ -538,7 +543,7 @@ def purchase_book():
 
         book_row = books_df[books_df['Title'].str.lower() == book_title.lower()]
         if not book_row.empty:
-            available_quantity = book_row.iloc[0]['quantity']
+            available_quantity = book_row.iloc[0]['AvailableCopies']
             if quantity > available_quantity:
                 messagebox.showinfo("Info", f"Only {available_quantity} copies are available.")
                 return
@@ -552,9 +557,11 @@ def purchase_book():
                 'Transaction_ID': [len(pd.read_csv('transactions.csv', on_bad_lines="skip")) + 1],
                 'Date': [datetime.now().strftime("%Y-%m-%d")],
                 'Amount': [total_price],
-                'Transaction_Type': ['Sale'],
+                'Transaction_Type': ['Purchase'],
                 'Book_Title': [book_title],
-                'Remarks': [f"User: {user_name}, ID: {user_id}, Payment: {payment_method_var.get()}"]
+                'Remarks': [f"User: {user_name}, ID: {user_id}, Payment: {payment_method_var.get()}"],
+                'user_id': [user_id],
+                'user_name': [user_name]
             }
 
             try:
@@ -668,10 +675,9 @@ def pay_fines():
                 "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "Amount": payment_amount,
                 "Transaction_Type": "Fine Payment",
-                "Book_ID": None,  # Assuming no book ID is involved in this transaction
                 "Remarks": "Payment for outstanding fines",
-                "Transaction_ID": f"TRX{len(transactions_df) + 1}",  # Generating a unique transaction ID
-                "Book_Title": None,  # Assuming no specific book title for this transaction
+                "Transaction_ID":[len(pd.read_csv('transactions.csv', on_bad_lines="skip")) + 1],
+                "Book_Title": None,
                 "user_id": user_id,
                 "user_name": user_name,
             }])

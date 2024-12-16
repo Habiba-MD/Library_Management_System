@@ -1,30 +1,37 @@
 loan_id,book_title,user_name,user_id,loan_date,return_date,loan_duration,status,fine
-1,The Catcher in the Rye,habiba,1,2024-01-05,2024-01-19,14,Returned,0.0
-2,To Kill a Mockingbird,rawan,2,2024-02-10,2024-02-24,14,Returned,0.0
-3,Moby-Dick,shalaby,3,2024-03-12,2024-03-26,14,Returned,0.0
-4,Pride and Prejudice,essam,4,2024-04-18,2024-05-02,14,Returned,0.0
-5,1984,habiba,1,2024-05-01,2024-05-15,14,Returned,0.0
-6,One Hundred Years of Solitude,rawan,2,2024-06-03,2024-06-17,14,Returned,0.0
-7,The Alchemist,shalaby,3,2024-07-05,2024-07-19,14,Returned,0.0
-8,The Burning God,essam,4,2024-08-07,2024-08-21,14,Returned,0.0
-9,The Great Gatsby,habiba,1,2024-09-10,2024-09-24,14,Returned,10.0
-10,Six of Crows,rawan,2,2024-10-15,2024-10-29,14,Returned,0.0
-11,Crooked Kingdom,shalaby,3,2024-11-20,2024-12-04,14,Returned,5.0
-12,The Brothers Karamazov,habiba,1,2024-01-25,2024-02-08,14,Returned,0.0
-13,The Hobbit,rawan,2,2024-03-05,2024-03-19,14,Returned,0.0
-14,Educated,shalaby,3,2024-04-15,2024-04-29,14,Returned,0.0
-15,Sapiens: A Brief History of Humankind,essam,4,2024-05-20,2024-06-03,14,Returned,0.0
-16,Becoming,habiba,1,2024-07-01,2024-07-15,14,Returned,0.0
-17,The Sword of Kaigen,rawan,2,2024-08-15,2024-08-29,14,Returned,0.0
-18,The Poppy War,shalaby,3,2024-09-10,2024-09-24,14,Returned,0.0
-19,The Winners,essam,4,2024-10-20,2024-11-03,14,Returned,0.0
-20,Madonna in a Fur Coat,habiba,1,2024-11-15,2024-11-29,14,Returned,5.0
-21,The Wright Brothers,essam,4,2024-12-05,2024-12-19,14,Borrowed,0.0
-22,Sapiens: A Brief History of Humankind,rawan,2,2024-12-10,2024-12-24,14,Borrowed,0.0
-23,The Poppy War,shalaby,3,2024-12-08,2024-12-22,14,Borrowed,0.0
-24,Educated,habiba,1,2024-12-07,2024-12-21,14,Borrowed,0.0
-25,The Sword of Kaigen,essam,4,2024-12-11,2024-12-25,14,Borrowed,0.0
+1,The Catcher in the Rye,Habiba,1,2024-01-05,2024-01-19,14,Returned,0.0
+2,To Kill a Mockingbird,Rawan,2,2024-02-10,2024-02-24,14,Returned,0.0
+3,Moby-Dick,Shalaby,3,2024-03-12,2024-03-26,14,Returned,0.0
+4,Pride and Prejudice,Essam,4,2024-04-18,2024-05-02,14,Returned,0.0
+5,1984,Habiba,1,2024-05-01,2024-05-15,14,Returned,0.0
+6,One Hundred Years of Solitude,Rawan,2,2024-06-03,2024-06-17,14,Returned,0.0
+7,The Alchemist,Shalaby,3,2024-07-05,2024-07-19,14,Returned,0.0
+8,The Burning God,Essam,4,2024-08-07,2024-08-21,14,Returned,0.0
+9,The Great Gatsby,Habiba,1,2024-09-10,2024-09-24,14,Returned,0.0
+10,Six of Crows,Rawan,2,2024-10-15,2024-10-29,14,Returned,0.0
+11,Crooked Kingdom,Shalaby,3,2024-11-20,2024-12-04,14,Returned,0.0
+12,The Brothers Karamazov,Habiba,1,2024-01-25,2024-02-08,14,Returned,0.0
+13,The Hobbit,Rawan,2,2024-03-05,2024-03-19,14,Returned,0.0
+14,Educated,Shalaby,3,2024-04-15,2024-04-29,14,Returned,0.0
+15,Sapiens: A Brief History of Humankind,Essam,4,2024-05-20,2024-06-03,14,Returned,0.0
+16,Becoming,Habiba,1,2024-07-01,2024-07-15,14,Returned,0.0
+17,The Sword of Kaigen,Rawan,2,2024-08-15,2024-08-29,14,Returned,0.0
+18,The Poppy War,Shalaby,3,2024-09-10,2024-09-24,14,Returned,0.0
+19,The Winners,Essam,4,2024-10-20,2024-11-03,14,Returned,0.0
+20,Madonna in a Fur Coat,Habiba,1,2024-11-15,2024-11-29,14,Returned,0.0
+21,The Wright Brothers,Essam,2024-12-05,2024-12-19,14,Borrowed,0.0
+22,Sapiens: A Brief History of Humankind,Rawan,2,2024-12-10,2024-12-24,14,Borrowed,0.0
+23,The Poppy War,Shalaby,3,2024-12-08,2024-12-22,14,Borrowed,0.0
+24,Educated,Habiba,1,2024-12-07,2024-12-21,14,Borrowed,0.0
+25,The Sword of Kaigen,Essam,4,2024-12-11,2024-12-25,14,Borrowed,0.0
 26,The Catcher in the Rye,Sarah,5,2024-12-15,2024-12-29,14,Borrowed,0.0
 27,1984,Laila,6,2024-12-16,2024-12-30,14,Borrowed,0.0
 28,The Great Gatsby,Sarah,5,2024-12-20,2024-01-03,14,Borrowed,0.0
 29,One Hundred Years of Solitude,Laila,6,2024-12-22,2024-01-05,14,Borrowed,0.0
+30,1984,Habiba,1,2024-12-16,2024-12-30,14,Borrowed,0.0
+31,1984,Rawan,2,2024-12-16,2024-12-30,14,Borrowed,0.0
+32,1984,Shalaby,3,2024-12-16,2024-12-30,14,Borrowed,0.0
+33,Six Of Crows,Habiba,1,2024-12-16,2024-12-30,14,Borrowed,0.0
+34,Six Of Crows,Essam,4,2024-12-16,2024-12-30,14,Borrowed,0.0
+35,The Poppy War,Essam,4,2024-12-16,2024-12-30,14,Borrowed,0.0
+36,Educated,Shalaby,3,2024-12-16,2024-12-30,14,Borrowed,0.0
