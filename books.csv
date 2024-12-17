@@ -27,3 +27,4 @@ Book_ID,Title,Author,Genre,Year_Published,Price,ISBN,Language,Rating,Available,A
 27,The Shadow of the Wind,Carlos Ruiz Zafón,Historical Fiction,2001,455.0,9780143034902,Spanish,4.5,Yes,4,487.0
 29,Little Fires Everywhere,Celeste Ng,Drama,2017,380.0,9780735224292,English,4.4,Yes,5,368.0
 30,The Outsiders,S.E. Hinton,Young Adult,1967,289.0,9780142407332,English,4.5,Yes,4,192.0
+

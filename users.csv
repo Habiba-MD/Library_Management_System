@@ -7,4 +7,6 @@ user_id,username,email,password,role
 6.0,Laila,laila@gmail,laila,user
 7.0,employee1,employee1@gmail,employee1,employee
 8.0,admin1,admin1@gmail,admin1,admin
-9,Rin,rin@gmail,rin,user
+9.0,Rin,rin@gmail,rin,user
+10.0,Menna,menna@gmail,menna,user
+11.0,Ali,ali@gmail,ali,employee

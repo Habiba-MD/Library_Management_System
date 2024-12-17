@@ -8,7 +8,6 @@ def add_book():
     input_window.title("Add Book")
     input_window.geometry("400x600") 
     input_window.attributes("-topmost", True)  
-    book_id_var = ctk.StringVar()
     book_title_var = ctk.StringVar()
     book_author_var = ctk.StringVar()
     book_genre_var = ctk.StringVar()
@@ -17,7 +16,6 @@ def add_book():
 
     def submit_inputs():
         try:
-            book_id = book_id_var.get().strip().title()
             book_title = book_title_var.get().strip().title()
             book_author = book_author_var.get().strip().title()
             book_genre = book_genre_var.get().strip().title()
@@ -25,17 +23,17 @@ def add_book():
             book_quantity = book_quantity_var.get().strip()
             
             
-            if not all([book_id, book_title, book_author, book_genre,book_price,book_quantity]):
+            if not all([ book_title, book_author, book_genre,book_price,book_quantity]):
                 messagebox.showerror("Input Error", "All fields must be filled!")
                 return
             
             books_df = pd.read_csv("books.csv")
-            if book_id in books_df["Book_ID"].astype(str).values:
-                messagebox.showerror("Duplicate ID", f"Book ID '{book_id}' already exists!")
+            if book_title in books_df["Title"].astype(str).values:
+                messagebox.showerror("Duplicate Book", f"Book {book_title}' already exists!")
                 return
       
             new_row = {
-                "Book_ID": book_id,
+                "Book_ID":len(pd.read_csv('books.csv', on_bad_lines="skip")) + 1,
                 "Title": book_title,
                 "Author": book_author,
                 "Genre": book_genre,
@@ -58,9 +56,6 @@ def add_book():
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     # GUI Elements
-    ctk.CTkLabel(input_window, text="Book ID:", font=("Arial", 14)).pack(pady=5)
-    ctk.CTkEntry(input_window, textvariable=book_id_var).pack(pady=5)
-
     ctk.CTkLabel(input_window, text="Book Title:", font=("Arial", 14)).pack(pady=5)
     ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)
 
@@ -554,7 +549,7 @@ def purchase_book():
             books_df.to_csv('books.csv', index=False)
 
             transaction_data = {
-                'Transaction_ID': [len(pd.read_csv('transactions.csv', on_bad_lines="skip")) + 1],
+                'Transaction_ID': len(pd.read_csv('transactions.csv', on_bad_lines="skip")) + 1,
                 'Date': [datetime.now().strftime("%Y-%m-%d")],
                 'Amount': [total_price],
                 'Transaction_Type': ['Purchase'],
@@ -676,7 +671,7 @@ def pay_fines():
                 "Amount": payment_amount,
                 "Transaction_Type": "Fine Payment",
                 "Remarks": "Payment for outstanding fines",
-                "Transaction_ID":[len(pd.read_csv('transactions.csv', on_bad_lines="skip")) + 1],
+                "Transaction_ID":len(pd.read_csv('transactions.csv', on_bad_lines="skip")) + 1,
                 "Book_Title": None,
                 "user_id": user_id,
                 "user_name": user_name,
@@ -745,32 +740,28 @@ def add_user():
     input_window.geometry("400x400")
     input_window.attributes("-topmost", True)
 
-    user_id_var = ctk.StringVar()
     username_var = ctk.StringVar()
     email_var = ctk.StringVar()
     password_var = ctk.StringVar()
     
     def submit_inputs():
         try:
-            user_id = user_id_var.get().strip()
             username = username_var.get().strip()
             email = email_var.get().strip().lower()
             password = password_var.get().strip()
 
-            if not all([user_id, username, email, password]):
+            if not all([username, email, password]):
                 messagebox.showerror("Input Error", "All fields must be filled!")
                 return
 
             users_df = pd.read_csv("users.csv")
-            if user_id in users_df["user_id"].astype(str).values:
-                messagebox.showerror("Duplicate ID", f"User ID '{user_id}' already exists!")
-                return
+            
             if username in users_df["username"].astype(str).values:
                 messagebox.showerror("Duplicate Username", f"Username '{username}' already exists!")
                 return
             
             new_row = {
-                "user_id": user_id,
+                "user_id": len(pd.read_csv('users.csv', on_bad_lines="skip")) + 1,
                 "username": username,
                 "email": email,
                 "password": password,
@@ -790,9 +781,6 @@ def add_user():
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     # GUI Elements
-    ctk.CTkLabel(input_window, text="User ID:", font=("Arial", 14)).pack(pady=5)
-    ctk.CTkEntry(input_window, textvariable=user_id_var).pack(pady=5)
-
     ctk.CTkLabel(input_window, text="Username:", font=("Arial", 14)).pack(pady=5)
     ctk.CTkEntry(input_window, textvariable=username_var).pack(pady=5)
 
@@ -862,33 +850,27 @@ def add_employee():
     input_window.title("Add Employee")
     input_window.geometry("400x400")
     input_window.attributes("-topmost", True)
-
-    user_id_var = ctk.StringVar()
     username_var = ctk.StringVar()
     email_var = ctk.StringVar()
     password_var = ctk.StringVar()
 
     def submit_inputs():
         try:
-            user_id = user_id_var.get().strip()
             username = username_var.get().strip()
             email = email_var.get().strip().lower()
             password = password_var.get().strip()
 
-            if not all([user_id, username, email, password]):
+            if not all([username, email, password]):
                 messagebox.showerror("Input Error", "All fields must be filled!")
                 return
 
             users_df = pd.read_csv("users.csv")
-            if user_id in users_df["user_id"].astype(str).values:
-                messagebox.showerror("Duplicate ID", f"User ID '{user_id}' already exists!")
-                return
             if username in users_df["username"].astype(str).values:
                 messagebox.showerror("Duplicate Username", f"Username '{username}' already exists!")
                 return
             
             new_row = {
-                "user_id": user_id,
+                "user_id": len(pd.read_csv('users.csv', on_bad_lines="skip")) + 1,
                 "username": username,
                 "email": email,
                 "password": password,
@@ -908,8 +890,6 @@ def add_employee():
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     # GUI Elements
-    ctk.CTkLabel(input_window, text="Employee ID:", font=("Arial", 14)).pack(pady=5)
-    ctk.CTkEntry(input_window, textvariable=user_id_var).pack(pady=5)
 
     ctk.CTkLabel(input_window, text="Employee Name:", font=("Arial", 14)).pack(pady=5)
     ctk.CTkEntry(input_window, textvariable=username_var).pack(pady=5)
