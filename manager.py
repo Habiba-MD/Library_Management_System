@@ -17,7 +17,7 @@ def create_admin_window(username):
     admin_window.geometry('1000x700')
     admin_window.title("Admin Window")
     
-     # Create main frame
+    # Create main frame
     main_frame = ctk.CTkFrame(admin_window)
     main_frame.pack(fill="both", expand=True)
 
@@ -434,7 +434,6 @@ def create_admin_window(username):
     # Function to display the reports in the frame
     def display_reports():
         display_plot_on_tab(frame_for_plots,books_loaned_per_user)
-        
         display_plot_on_tab(frame_for_plots, transaction_insights)
         display_plot_on_tab(frame_for_plots, genre_distribution)
         display_plot_on_tab(frame_for_plots, books_per_author)
@@ -445,7 +444,6 @@ def create_admin_window(username):
         canvas.config(scrollregion=canvas.bbox("all"))
 
     display_reports()
-    
     admin_window.mainloop()
 create_admin_window('Manager')
 

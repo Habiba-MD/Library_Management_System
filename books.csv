@@ -1,6 +1,6 @@
 Book_ID,Title,Author,Genre,Year_Published,Price,ISBN,Language,Rating,Available,AvailableCopies,Pages
 1,The Catcher in the Rye,J.D. Salinger,Fiction,1951,277.0,9780316769488,English,4.1,Yes,3,
-2,1984,George Orwell,Dystopian,1949,328.0,9780451524935,English,4.2,Yes,5,
+2,1984,George Orwell,Dystopian,1949,328.0,9780451524935,English,4.2,No,0,
 3,To Kill a Mockingbird,Harper Lee,Fiction,1960,281.0,9780061120084,English,4.3,Yes,4,
 4,The Great Gatsby,F. Scott Fitzgerald,Classics,1925,180.0,9780743273565,English,3.9,Yes,1,
 5,Moby-Dick,Herman Melville,Adventure,1851,585.0,9781503280786,English,3.5,Yes,2,
@@ -20,7 +20,7 @@ Book_ID,Title,Author,Genre,Year_Published,Price,ISBN,Language,Rating,Available,A
 19,Sapiens A Brief History of Humankind,Yuval Noah Harari,Non-Fiction,2011,443.0,9780062316110,English,4.7,Yes,4,
 20,Educated,Tara Westover,Non-Fiction,2018,352.0,9780399590504,English,4.6,Yes,2,
 21,The Wright Brothers,David McCullough,Non-Fiction,2015,320.0,9781476728742,English,4.5,Yes,2,
-22,The Book Thief,Markus Zusak,Historical Fiction,2005,399.0,9780375842207,English,4.7,Yes,5,552.0
+22,The Book Thief,Markus Zusak,Historical Fiction,2005,399.0,9780375842207,English,4.7,Yes,3,552.0
 23,The Night Circus,Erin Morgenstern,Fantasy,2011,420.0,9780307744432,English,4.3,Yes,4,387.0
 25,The Silent Patient,Alex Michaelides,Thriller,2019,349.0,9781250301697,English,4.3,Yes,6,325.0
 26,Where the Crawdads Sing,Delia Owens,Drama,2018,300.0,9780735219090,English,4.8,Yes,3,384.0

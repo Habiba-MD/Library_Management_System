@@ -13,6 +13,7 @@ loans_data = pd.read_csv('loans.csv')
 
 
 def create_user_window(username):
+    #theme , color
     ctk.set_appearance_mode('light')
     ctk.set_default_color_theme('blue')
     user_window = ctk.CTk()
@@ -60,7 +61,7 @@ def create_user_window(username):
     browse_frame = ctk.CTkFrame(tabview.tab("Browse Books"))
     browse_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
-    # Scrollable Canvas for Books
+    # Scrollable
     canvas = ctk.CTkCanvas(browse_frame)
     scroll_y = ctk.CTkScrollbar(browse_frame, orientation="vertical", command=canvas.yview)
     scroll_y.pack(side="right", fill="y")
@@ -75,7 +76,7 @@ def create_user_window(username):
         canvas.update_idletasks()  
         canvas.config(scrollregion=canvas.bbox("all"))  
 
-    # Populate Books
+    # Upload Book Covers
     def resize_image(image_path, new_width=150, new_height=200):
         """Resize the image while maintaining quality."""
         try:
@@ -87,9 +88,8 @@ def create_user_window(username):
             return None
 
     def populate_books():
-        """Populate the books in a scrollable layout."""
         row, col = 0, 0
-        columns = 8  # Number of columns in grid layout
+        columns = 8  # Number of columns
 
         for _, book in books_data.iterrows():
             frame = ctk.CTkFrame(scrollable_frame, width=180, height=300, bg_color="transparent", fg_color="transparent", border_width=0, corner_radius=10)
@@ -105,10 +105,13 @@ def create_user_window(username):
 
             # Book Title and Author
             title_label = ctk.CTkLabel(frame, text=book["Title"], font=("Arial", 12, "bold"), bg_color="transparent", wraplength=150)
-            title_label.pack(pady=5)
+            title_label.pack(pady=2)
 
             author_label = ctk.CTkLabel(frame, text=f"by {book['Author']}", font=("Arial", 10), bg_color="transparent")
-            author_label.pack(pady=5)
+            author_label.pack(pady=1)
+            
+            price_label = ctk.CTkLabel(frame, text=f"{book['Price']} EGP", font=("Arial", 10), bg_color="transparent")
+            price_label.pack(pady=1)
 
             # Adjust grid position
             col += 1
@@ -121,14 +124,12 @@ def create_user_window(username):
 
     
     
-    # Overview Tab
+    # search Tab
     tabview.add("Search")
-    overview_frame = ctk.CTkFrame(tabview.tab("Search"), bg_color='transparent')
-    overview_frame.pack(fill="both", expand=True, padx=20, pady=20)
+    search_frame = ctk.CTkFrame(tabview.tab("Search"), bg_color='transparent')
+    search_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
-   
-    # Search Section for books and users
-    search_frame = ctk.CTkFrame(overview_frame, width=1000, height=300, bg_color='transparent')
+    search_frame = ctk.CTkFrame(search_frame, width=1000, height=300, bg_color='transparent')
     search_frame.pack(side="left", fill="both", expand=True, padx=5, pady=10)
 
     book_search_label = ctk.CTkLabel(search_frame, text="Search for Book", bg_color='transparent')
@@ -155,7 +156,7 @@ def create_user_window(username):
             message = f"No results found for book title: '{book_title}'."
         messagebox.showinfo("Search Results", message)
         
-    #All Books Tan
+    #All Books Tab
     def update_table_view(filter_genre=None, filter_availability=None, search_query=""):
         # Apply filtering
         filtered_data = books_data
@@ -308,9 +309,5 @@ def create_user_window(username):
     update_loans_table_view(username=username)
     
     
-    
-    
-    
-    
     user_window.mainloop()
-create_user_window("rawan")
+create_user_window("Rawan")

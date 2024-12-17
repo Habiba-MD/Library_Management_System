@@ -249,8 +249,9 @@ def loan_book():
 
             # Decrease available copies
             books_df.loc[books_df["Title"].str.title() == book_title, "AvailableCopies"] = available_copies - 1
+            books_df.loc[books_df["AvailableCopies"] == 0 ,"Available"] = "No"
             books_df.to_csv("books.csv", index=False)
-
+    
             loan_date = datetime.now().strftime("%Y-%m-%d")
             return_date = (datetime.now() + timedelta(days=loan_duration)).strftime("%Y-%m-%d")
 
@@ -323,7 +324,7 @@ def return_book():
             damage_type = damage_var.get()
             fine_percentage = {
                 "Simple": 0.1,
-                "Medium": 0.5,
+                "Medium": 0.25,
                 "Unfixable": 1.0,
             }.get(damage_type, 0)
 
@@ -347,21 +348,18 @@ def return_book():
 
     def submit_inputs():
         try:
-            loan_id = loan_id_var.get().strip()
+            loan_id = int(loan_id_var.get().strip())
             book_title = book_title_var.get().strip().title()
 
-            if not loan_id or not book_title:
-                messagebox.showerror("Input Error", "Loan ID and Book Title must be provided!")
-                return
-
             loans_df = pd.read_csv("loans.csv")
-            loan_row = loans_df[loans_df["loan_id"] == int(loan_id)]
+            books_df = pd.read_csv("books.csv")
 
+            loan_row = loans_df[loans_df["loan_id"] == loan_id]
             if loan_row.empty:
                 messagebox.showerror("Not Found", f"Loan ID '{loan_id}' not found!")
                 return
 
-            if loan_row["status"].values[0].lower() == "returned":
+            if loan_row["status"].values[0].strip().lower() == "returned":
                 messagebox.showinfo("Already Returned", f"Loan ID '{loan_id}' has already been returned.")
                 return
 
@@ -369,46 +367,46 @@ def return_book():
                 messagebox.showerror("Mismatch", f"The book title '{book_title}' does not match the loan record.")
                 return
 
-            books_df = pd.read_csv("books.csv")
             book_row = books_df[books_df["Title"].str.title() == book_title]
             if book_row.empty:
                 messagebox.showerror("Book Not Found", f"Book '{book_title}' not found in inventory!")
                 return
 
-            # Increase available copies
+            books_df["AvailableCopies"] = books_df["AvailableCopies"].astype(int)
             books_df.loc[books_df["Title"].str.title() == book_title, "AvailableCopies"] += 1
+            books_df.loc[books_df["AvailableCopies"] > 0, "Available"] = "Yes"
 
-            # Calculate fine if the book is overdue
             return_date = datetime.now().strftime("%Y-%m-%d")
             loan_date = datetime.strptime(loan_row["loan_date"].values[0], "%Y-%m-%d")
             return_date_obj = datetime.strptime(return_date, "%Y-%m-%d")
 
-            # Get the loan period from the loan data
-            loan_duration = loan_row["loan_duration"].values[0]  # Assume the column is 'loan_period'
-            overdue_days = (return_date_obj - loan_date).days - loan_duration  # Calculate overdue days based on loan period
+            loan_duration = int(loan_row["loan_duration"].values[0])
+            overdue_days = (return_date_obj - loan_date).days - loan_duration
 
-            overdue_fine = 0
-            overdue_message = ""
+            overdue_fine = max(0, overdue_days * 5)  # 5 pounds fine per day overdue
+            overdue_message = (
+                f"\nThis book is {overdue_days} days overdue. Fine: {overdue_fine} EGP."
+                if overdue_days > 0 else ""
+            )
 
-            if overdue_days > 0:
-                overdue_fine = overdue_days * 5  # 5 pounds fine per day overdue
-                overdue_message = f"\nThis book is {overdue_days} days overdue. Fine: {overdue_fine} EGP."
-
-            # Ask if the book is damaged
+            # Check for book damage
             total_fine = overdue_fine
             is_damaged = messagebox.askyesno("Damage Check", "Is the book damaged?")
             if is_damaged:
-                book_price = book_row["Price"].values[0]
+                book_price = float(book_row["Price"].values[0])
                 damage_fine = calculate_damage_fine(book_price)
                 total_fine += damage_fine
 
-            loans_df.loc[loans_df["loan_id"] == int(loan_id), "status"] = "Returned"
-            loans_df.loc[loans_df["loan_id"] == int(loan_id), "return_date"] = return_date
-            loans_df.loc[loans_df["loan_id"] == int(loan_id), "fine"] = total_fine
+            # Update loan record
+            loans_df.loc[loans_df["loan_id"] == loan_id, "status"] = "Returned"
+            loans_df.loc[loans_df["loan_id"] == loan_id, "return_date"] = return_date
+            loans_df.loc[loans_df["loan_id"] == loan_id, "fine"] = total_fine
 
+            # Save changes to CSV files
             books_df.to_csv("books.csv", index=False)
             loans_df.to_csv("loans.csv", index=False)
 
+        
             fine_message = f"Book '{book_title}' returned successfully!{overdue_message}"
             if total_fine > 0:
                 fine_message += f"\nTotal Fine: {total_fine} EGP."
@@ -427,6 +425,7 @@ def return_book():
     ctk.CTkEntry(input_window, textvariable=book_title_var).pack(pady=5)
 
     ctk.CTkButton(input_window, text="Return Book", command=submit_inputs).pack(pady=20)
+
 
 
 
@@ -551,6 +550,7 @@ def purchase_book():
             total_price = book_row.iloc[0]['Price'] * quantity
             new_quantity = available_quantity - quantity
             books_df.loc[books_df['Title'].str.lower() == book_title.lower(), 'AvailableCopies'] = new_quantity
+            books_df.loc[books_df["AvailableCopies"] == 0 , "Available"] = "No"
             books_df.to_csv('books.csv', index=False)
 
             transaction_data = {
@@ -682,7 +682,7 @@ def pay_fines():
                 "user_name": user_name,
             }])
 
-            # Concatenate new transaction to the existing DataFrame
+            
             transactions_df = pd.concat([transactions_df, new_transaction], ignore_index=True)
 
             loans_df.to_csv("loans.csv", index=False)
@@ -779,7 +779,7 @@ def add_user():
             users_df = pd.concat([users_df, pd.DataFrame([new_row])], ignore_index=True)
             users_df.to_csv("users.csv", index=False)
 
-            # Success message
+          
             messagebox.showinfo("Success", f"User '{username}' added successfully!")
             input_window.destroy()
         except FileNotFoundError:
@@ -973,12 +973,10 @@ def delete_employee():
     ctk.CTkButton(input_window, text="Delete Employee", command=submit_inputs).pack(pady=20)
     
 def order_books():
-    # Create a new window for ordering books
     order_window = ctk.CTkToplevel()
     order_window.title("Order New Books")
     order_window.geometry("500x400")
-    
-    # Define a list to store books to order
+
     books_to_order = []
 
     def add_book_to_order():
@@ -989,42 +987,34 @@ def order_books():
             messagebox.showerror("Input Error", "Please enter a valid book title and quantity!")
             return
 
-        # Add the book title and quantity to the list
         books_to_order.append({"title": book_title, "quantity": book_quantity})
 
-        # Clear the input fields
         book_title_var.set("")
         quantity_var.set(1)
-
-        # Update the display of added books
+        
         order_textbox.insert("end", f"{book_title} - {book_quantity} copies\n")
 
     def submit_order():
         try:
-            # Check if there are any books in the order
             if not books_to_order:
                 messagebox.showerror("Input Error", "No books to order!")
                 return
-
-            # Load the books inventory
+            
             books_df = pd.read_csv("books.csv")
 
             for book in books_to_order:
                 book_title = book["title"]
                 quantity = book["quantity"]
 
-                # Check if the book exists in the inventory
                 book_row = books_df[books_df["Title"].str.title() == book_title]
                 
                 if book_row.empty:
                     messagebox.showwarning("Book Not Found", f"Book '{book_title}' not found in inventory!")
-                    continue  # Skip this book
-
-                # Update the available copies of the existing book
+                    continue  
+                
                 available_copies = book_row["AvailableCopies"].values[0]
                 books_df.loc[books_df["Title"].str.title() == book_title, "AvailableCopies"] = available_copies + quantity
 
-            # Save the updated books inventory
             books_df.to_csv("books.csv", index=False)
 
             messagebox.showinfo("Order Success", "Books ordered successfully and inventory updated!")
@@ -1033,7 +1023,6 @@ def order_books():
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
-    # Create input fields for book title and quantity
     book_title_var = ctk.StringVar()
     quantity_var = ctk.IntVar(value=1)
 
@@ -1043,14 +1032,11 @@ def order_books():
     ctk.CTkLabel(order_window, text="Enter Quantity:", font=("Arial", 14)).pack(pady=10)
     ctk.CTkEntry(order_window, textvariable=quantity_var).pack(pady=5)
 
-    # Button to add the book to the order list
     add_button = ctk.CTkButton(order_window, text="Add Book to Order", command=add_book_to_order)
     add_button.pack(pady=10)
 
-    # Replace the Listbox with a Textbox to display added books
     order_textbox = ctk.CTkTextbox(order_window, height=10, width=50)
     order_textbox.pack(fill="both", expand=True, pady=20)
 
-    # Button to submit the order
     submit_button = ctk.CTkButton(order_window, text="Submit Order", command=submit_order)
     submit_button.pack(pady=20)

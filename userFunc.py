@@ -118,6 +118,7 @@ def borrow_book():
 
             # Decrease available copies
             books_df.loc[books_df["Title"].str.title() == book_title, "AvailableCopies"] = available_copies - 1
+            books_df[books_df["AvailableCopies"]== 0 , "Available"] = "No"
             books_df.to_csv("books.csv", index=False)
 
             loan_date = datetime.now().strftime("%Y-%m-%d")
@@ -182,8 +183,6 @@ def buy_book():
             return
 
         quantity = int(quantity)
-
-        # Load book data
         try:
             books_df = pd.read_csv('books.csv')
             books_df['Price'] = pd.to_numeric(books_df['Price'], errors='coerce')
@@ -336,6 +335,7 @@ def buy_book():
             total_price = book_row.iloc[0]['Price'] * quantity
             new_quantity = available_quantity - quantity
             books_df.loc[books_df['Title'].str.lower() == book_title.lower(), 'AvailableCopies'] = new_quantity
+            books_df[books_df["AvailableCopies"]== 0 , "Available"] = "No"
             books_df.to_csv('books.csv', index=False)
 
             transaction_data = {
@@ -483,7 +483,6 @@ def leave_review():
                 messagebox.showerror("Input Error", "Rating must be between 1 and 5!")
                 return
 
-            # Find the book ID corresponding to the title
             book = books_df[books_df['Title'].str.title() == book_title]
             if book.empty:
                 messagebox.showerror("Book Not Found", f"The book '{book_title}' is not found in the library!")
@@ -491,7 +490,7 @@ def leave_review():
 
             book_id = book.iloc[0]["Book_ID"]  
             review_id = len(reviews_df) + 1  
-            # Create new review entry
+            
             new_review = pd.DataFrame([{
                 "review_id": review_id,
                 "user_name": user_name,
@@ -500,8 +499,7 @@ def leave_review():
                 "review_text": review_text,
                 "rating": rating
             }])
-
-            # Append new review to reviews_df
+            
             reviews_df = pd.concat([reviews_df, new_review], ignore_index=True)
             reviews_df.to_csv("reviews.csv", index=False)  
 

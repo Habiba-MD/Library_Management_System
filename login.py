@@ -54,8 +54,8 @@ def login():
 def register():
     username_input = user_entry.get()
     password_input = user_pass.get()
-    email_input = user_email.get()  # Fix email assignment
-
+    email_input = user_email.get()  
+    
     if username_input and password_input and email_input:
         try:
             users_data = pd.read_csv('users.csv')
@@ -65,9 +65,8 @@ def register():
         if username_input in users_data['username'].values:
             tkmb.showwarning(title="Username Taken", message="The username is already taken. Please choose a different one.")
             return
-
-        role_input = 'user'  
-        new_user = pd.DataFrame({'username': [username_input], 'email': [email_input], 'password': [password_input], 'role': [role_input]})
+ 
+        new_user = pd.DataFrame({'username': [username_input], 'email': [email_input], 'password': [password_input], 'role': 'user'})
         users_data = pd.concat([users_data, new_user], ignore_index=True)
         users_data.to_csv('users.csv', index=False)
 
@@ -80,7 +79,7 @@ def register():
         tkmb.showwarning(title="Input Error", message="Please fill in all fields.")
 
 # Main UI components
-label = ctk.CTkLabel(app, text="Welcome there, please enter you username and password to access the library system")
+label = ctk.CTkLabel(app, text="Welcome there, Please enter you username and password to access the library system")
 label.pack(pady=20)
 
 frame = ctk.CTkFrame(master=app)

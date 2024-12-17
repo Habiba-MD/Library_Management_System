@@ -38,4 +38,6 @@ Date,Amount,Transaction_Type,Book_ID,Remarks,Transaction_ID,Book_Title,user_id,u
 2024-12-16,465.0,Purchase,,"User: habiba, ID: 1, Payment: ",37,six of crows,1.0,Habiba
 2024-12-16,328.0,Purchase,,"User: habiba, ID: 1, Payment: ",38,1984,1.0,Habiba
 2024-12-16 17:43:35,15.0,Fine Payment,,Payment for outstanding fines,[39],,1.0,Habiba
-2024-12-16 17:48:34,5.0,Fine Payment,,Payment for outstanding fines,[40],,3,Shalaby
+2024-12-16 17:48:34,5.0,Fine Payment,,Payment for outstanding fines,[40],,3.0,Shalaby
+2024-12-17,399.0,Purchase,,"User: Laila, ID: 6, Payment: Cash",41,The book thief,6.0,Laila
+2024-12-17,328.0,Purchase,,"User: Sarah, ID: 5, Payment: Cash",42,1984,5,Sarah

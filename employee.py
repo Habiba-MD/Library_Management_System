@@ -122,7 +122,7 @@ def create_employee_window(username):
             message = f"No results found for user name: '{user_name}'."
         messagebox.showinfo("Search Results", message)
         
-   #All Books Tan
+   #All Books Tab
     def update_table_view(filter_genre=None, filter_availability=None, search_query=""):
         # Apply filtering
         filtered_data = books_data
@@ -325,4 +325,4 @@ def create_employee_window(username):
     
     
     employee_window.mainloop()
-#create_employee_window('Employee')
+create_employee_window('Employee')

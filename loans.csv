@@ -19,7 +19,7 @@ loan_id,book_title,user_name,user_id,loan_date,return_date,loan_duration,status,
 18,The Poppy War,Shalaby,3,2024-09-10,2024-09-24,14,Returned,0.0
 19,The Winners,Essam,4,2024-10-20,2024-11-03,14,Returned,0.0
 20,Madonna in a Fur Coat,Habiba,1,2024-11-15,2024-11-29,14,Returned,0.0
-21,The Wright Brothers,Essam,2024-12-05,2024-12-19,14,Borrowed,0.0
+21,The Wright Brothers,Essam,2024-12-05,2024-12-19,14,Borrowed,0.0,
 22,Sapiens: A Brief History of Humankind,Rawan,2,2024-12-10,2024-12-24,14,Borrowed,0.0
 23,The Poppy War,Shalaby,3,2024-12-08,2024-12-22,14,Borrowed,0.0
 24,Educated,Habiba,1,2024-12-07,2024-12-21,14,Borrowed,0.0
@@ -35,3 +35,5 @@ loan_id,book_title,user_name,user_id,loan_date,return_date,loan_duration,status,
 34,Six Of Crows,Essam,4,2024-12-16,2024-12-30,14,Borrowed,0.0
 35,The Poppy War,Essam,4,2024-12-16,2024-12-30,14,Borrowed,0.0
 36,Educated,Shalaby,3,2024-12-16,2024-12-30,14,Borrowed,0.0
+37,1984,Habiba,1,2024-12-17,2024-12-17,7,Returned,164.0
+38,The Book Thief,Shalaby,3,2024-12-17,2024-12-24,7,Borrowed,0.0
